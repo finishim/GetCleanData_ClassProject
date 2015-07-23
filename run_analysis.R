@@ -7,7 +7,7 @@ run_analysis <- function() {
         dir.create("data") # create data folder if it does not already exist
     }
     if(!file.exists(".\\data\\projectfiles\\UCI HAR Dataset")) {
-        download.file(dataset_url, destfile = ".\\data\\projectfiles.zip") 
+        download.file(dataset_url, destfile = ".\\data\\projectfiles.zip", mode = "wb")
         unzip(".\\data\\projectfiles.zip", exdir = ".\\data") # unzip the file
     }
     
