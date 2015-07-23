@@ -8,7 +8,7 @@ run_analysis <- function() {
     }
     if(!file.exists(".\\data\\projectfiles\\UCI HAR Dataset")) {
         download.file(dataset_url, destfile = ".\\data\\projectfiles.zip") 
-        unzip(".\\data\\projectfiles.zip") # unzip the file
+        unzip(".\\data\\projectfiles.zip", exdir = ".\\data") # unzip the file
     }
     
     ## Merge the training and the test sets to create one data set.
