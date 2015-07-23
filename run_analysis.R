@@ -1,13 +1,15 @@
 run_analysis <- function() {
     
-    ## Start by downloading the dataset
+    ## Start by downloading the dataset if not already downloaded
     
-    #dataset_url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-    #if(!file.exists("data")) {
-    #    dir.create("data") # create data folder if it does not already exist
-    #}
-    #download.file(dataset_url, destfile = ".\\data\\projectfiles.zip") 
-    #unzip(".\\data\\projectfiles.zip") # unzip the file
+    dataset_url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+    if(!file.exists("data")) {
+        dir.create("data") # create data folder if it does not already exist
+    }
+    if(!file.exists(".\\data\\projectfiles.zip")) {
+        download.file(dataset_url, destfile = ".\\data\\projectfiles.zip") 
+        unzip(".\\data\\projectfiles.zip") # unzip the file
+    }
     
     ## Merge the training and the test sets to create one data set.
     
