@@ -13,6 +13,26 @@ run_analysis <- function() {
     
     ## Merge the training and the test sets to create one data set.
     
+	# Read general files
+    features <- read.table(".\\data\\UCI HAR Dataset\\features.txt",header = FALSE)
+    activityLabels <- read.table(".\\data\\UCI HAR Dataset\\activity_labels.txt",header = FALSE)
+    # Read the Test Data
+    subjectTest <- read.table(".\\data\\UCI HAR Dataset\\test\\subject_test.txt",header = FALSE)
+    xTest <- read.table(".\\data\\UCI HAR Dataset\\test\\X_test.txt",header = FALSE)
+    yTest <- read.table(".\\data\\UCI HAR Dataset\\test\\y_test.txt",header = FALSE)
+    # add column names
+    colnames(subjectTest) <- "subjectId"
+    colnames(xTest) <- features[,2] 
+    colnames(yTest) <- "activityId"
+    # Read the Train Data
+    subjectTrain <- read.table(".\\data\\UCI HAR Dataset\\train\\subject_train.txt",header = FALSE)
+    xTrain <- read.table(".\\data\\UCI HAR Dataset\\train\\X_train.txt",header = FALSE)
+    yTrain <- read.table(".\\data\\UCI HAR Dataset\\train\\y_train.txt",header = FALSE)
+    # add column names
+    colnames(subjectTrain) <- "subjectId"
+    colnames(xTrain) <- features[,2] 
+    colnames(yTrain) <- "activityId"
+	
     # Need to parse the files
     # Load onto a Data Table
     # Identify a key
