@@ -38,3 +38,6 @@ Here are the assumptions for tidy data:
 *Each variable is in a single column. 
 *Each activity-subject pair has a different row. 
 *Column names are easy to read and descriptive.
+
+## Required packages
+library(reshape2)
