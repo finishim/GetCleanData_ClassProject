@@ -1,0 +1,240 @@
+---
+title: "codebook"
+author: "Nazmi Anik"
+date: "Sunday, July 26, 2015"
+output: html_document
+---
+
+# Brief Summary
+
+Data used in the code is collected from the accelerometers from the Samsung Galaxy S smartphone. 
+Subjects were asked to lay down, sit, stand, walk upstairs, walk downstairs and walk with the smart phone.
+
+# Methodology
+
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ.
+
+These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz.
+
+Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz.
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ).
+
+Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag).
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals).
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+# Data Manipulation
+
+The data listed in the tidydata.txt file was filtered from 561 different measurements to include only ones with
+standard deviations and means of the measurements.
+
+This is how the filtering was done:
+
+```{r eval = FALSE}
+    ## look for -mean() or -std()
+    selectMeasurements <- grep("-(mean|std)\\(\\)", features[, 2])
+    
+    ## grab the labels
+    selectLabels <- features[selectMeasurements,2]
+    
+    ## subset the chosen measurements
+    selectedData <- mergedxData[,selectMeasurements]
+    
+    ## add the y and subject data columns to the table
+    finalData <- cbind(mergedsubjectData, mergedyData, selectedData)
+```
+
+This way we ended up with 68 variables.
+
+Next the data was tidied as follows.
+
+1. The column names were updated:
+
+```{r eval = FALSE}
+    ## replace finalData table's activity id column with activity name
+    finalData[,2] <- activityLabels[finalData[,2], 2]
+    
+    
+    # Appropriately label the data set with descriptive variable names. 
+    
+    
+    names(finalData)<-gsub("-", ".", names(finalData))
+    names(finalData)<-gsub("subjectId", "SubjectId", names(finalData))
+    names(finalData)<-gsub("activityId", "Activity", names(finalData))
+    names(finalData)<-gsub("^t", "Time", names(finalData))
+    names(finalData)<-gsub("^f", "Frequency", names(finalData))
+    names(finalData)<-gsub("Acc", "Accelerometer", names(finalData))
+    names(finalData)<-gsub("Gyro", "Gyroscope", names(finalData))
+    names(finalData)<-gsub("Mag", "Magnitude", names(finalData))
+    names(finalData)<-gsub("BodyBody", "Body", names(finalData))
+    names(finalData)<-gsub("std", "StandardDeviation", names(finalData))
+    names(finalData)<-gsub("mean", "Mean", names(finalData))
+    names(finalData)<-gsub("\\(|\\)", "", names(finalData))
+```
+
+2. The data was narrowed (melted):
+
+```{r eval = FALSE}
+    # melt the data set and make it narrow and tidy
+    library(reshape2)
+    finalData.melted <- melt(finalData, id = c("SubjectId", "Activity"))
+```
+
+Finally, the mean of every data for each subject-activity pair was calculated and written in a tidy data file.
+
+```{r eval = FALSE}
+    ## cast/summarize the data with the mean function, wide and tidy
+    finalData.mean <- dcast(finalData.melted, SubjectId + Activity ~ variable, mean)
+    
+    ## write the wide tidy table to a txt file
+    write.table(finalData.mean, file = ".\\tidydata.txt", row.names = FALSE)
+```
+
+# Variable Descriptions
+
+## General Variables
+
+SubjectID: Identifier for each subject.
+
+Activity: Describes the activity performed by the subject.
+
+## Measurements
+
+TimeBodyAccelerometer.Mean.X
+
+TimeBodyAccelerometer.Mean.Y
+
+TimeBodyAccelerometer.Mean.Z
+
+TimeBodyAccelerometer.StandardDeviation.X
+
+TimeBodyAccelerometer.StandardDeviation.Y
+
+TimeBodyAccelerometer.StandardDeviation.Z
+
+TimeGravityAccelerometer.Mean.X
+
+TimeGravityAccelerometer.Mean.Y
+
+TimeGravityAccelerometer.Mean.Z
+
+TimeGravityAccelerometer.StandardDeviation.X
+
+TimeGravityAccelerometer.StandardDeviation.Y
+
+TimeGravityAccelerometer.StandardDeviation.Z
+
+TimeBodyAccelerometerJerk.Mean.X
+
+TimeBodyAccelerometerJerk.Mean.Y
+
+TimeBodyAccelerometerJerk.Mean.Z
+
+TimeBodyAccelerometerJerk.StandardDeviation.X
+
+TimeBodyAccelerometerJerk.StandardDeviation.Y
+
+TimeBodyAccelerometerJerk.StandardDeviation.Z
+
+TimeBodyGyroscope.Mean.X
+
+TimeBodyGyroscope.Mean.Y
+
+TimeBodyGyroscope.Mean.Z
+
+TimeBodyGyroscope.StandardDeviation.X
+
+TimeBodyGyroscope.StandardDeviation.Y
+
+TimeBodyGyroscope.StandardDeviation.Z
+
+TimeBodyGyroscopeJerk.Mean.X
+
+TimeBodyGyroscopeJerk.Mean.Y
+
+TimeBodyGyroscopeJerk.Mean.Z
+
+TimeBodyGyroscopeJerk.StandardDeviation.X
+
+TimeBodyGyroscopeJerk.StandardDeviation.Y
+
+TimeBodyGyroscopeJerk.StandardDeviation.Z
+
+TimeBodyAccelerometerMagnitude.Mean
+
+TimeBodyAccelerometerMagnitude.StandardDeviation
+
+TimeGravityAccelerometerMagnitude.Mean
+
+TimeGravityAccelerometerMagnitude.StandardDeviation
+
+TimeBodyAccelerometerJerkMagnitude.Mean
+
+TimeBodyAccelerometerJerkMagnitude.StandardDeviation
+
+TimeBodyGyroscopeMagnitude.Mean
+
+TimeBodyGyroscopeMagnitude.StandardDeviation
+
+TimeBodyGyroscopeJerkMagnitude.Mean
+
+TimeBodyGyroscopeJerkMagnitude.StandardDeviation
+
+FrequencyBodyAccelerometer.Mean.X
+
+FrequencyBodyAccelerometer.Mean.Y
+
+FrequencyBodyAccelerometer.Mean.Z
+
+FrequencyBodyAccelerometer.StandardDeviation.X
+
+FrequencyBodyAccelerometer.StandardDeviation.Y
+
+FrequencyBodyAccelerometer.StandardDeviation.Z
+
+FrequencyBodyAccelerometerJerk.Mean.X
+
+FrequencyBodyAccelerometerJerk.Mean.Y
+
+FrequencyBodyAccelerometerJerk.Mean.Z
+
+FrequencyBodyAccelerometerJerk.StandardDeviation.X
+
+FrequencyBodyAccelerometerJerk.StandardDeviation.Y
+
+FrequencyBodyAccelerometerJerk.StandardDeviation.Z
+
+FrequencyBodyGyroscope.Mean.X
+
+FrequencyBodyGyroscope.Mean.Y
+
+FrequencyBodyGyroscope.Mean.Z
+
+FrequencyBodyGyroscope.StandardDeviation.X
+
+FrequencyBodyGyroscope.StandardDeviation.Y
+
+FrequencyBodyGyroscope.StandardDeviation.Z
+
+FrequencyBodyAccelerometerMagnitude.Mean
+
+FrequencyBodyAccelerometerMagnitude.StandardDeviation
+
+FrequencyBodyAccelerometerJerkMagnitude.Mean
+
+FrequencyBodyAccelerometerJerkMagnitude.StandardDeviation
+
+FrequencyBodyGyroscopeMagnitude.Mean
+
+FrequencyBodyGyroscopeMagnitude.StandardDeviation
+
+FrequencyBodyGyroscopeJerkMagnitude.Mean
+
+FrequencyBodyGyroscopeJerkMagnitude.StandardDeviation
+
+
+
