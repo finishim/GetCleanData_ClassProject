@@ -41,3 +41,6 @@ Here are the assumptions for tidy data:
 
 ## Required packages
 library(reshape2)
+
+## Codebook Link
+http://rpubs.com/finishim/GetCleanData_ClassProject 
