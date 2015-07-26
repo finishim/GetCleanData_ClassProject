@@ -34,9 +34,15 @@ You should create one R script called run_analysis.R that does the following.
 
 ## Tidy Data Description
 Here are the assumptions for tidy data:
+
+*Data that can be read into R with read.table(header=TRUE)
+
 *The tidy data has no duplicate columns. 
+
 *Each variable is in a single column. 
+
 *Each activity-subject pair has a different row. 
+
 *Column names are easy to read and descriptive.
 
 ## Required packages
