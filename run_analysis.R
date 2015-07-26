@@ -77,6 +77,20 @@ run_analysis <- function() {
     ## Appropriately label the data set with descriptive variable names. 
     
     
+	names(finalData)<-gsub("-", ".", names(finalData))
+    names(finalData)<-gsub("subjectId", "SubjectId", names(finalData))
+    names(finalData)<-gsub("activityId", "Activity", names(finalData))
+    names(finalData)<-gsub("^t", "Time", names(finalData))
+    names(finalData)<-gsub("^f", "Frequency", names(finalData))
+    names(finalData)<-gsub("Acc", "Accelerometer", names(finalData))
+    names(finalData)<-gsub("Gyro", "Gyroscope", names(finalData))
+    names(finalData)<-gsub("Mag", "Magnitude", names(finalData))
+    names(finalData)<-gsub("BodyBody", "Body", names(finalData))
+    names(finalData)<-gsub("std", "StandardDeviation", names(finalData))
+    names(finalData)<-gsub("mean", "Mean", names(finalData))
+    names(finalData)<-gsub("\\(|\\)", "", names(finalData))
+	
+	
     ## From the data set in step 4, create a second, independent tidy data set 
     ## with the average of each variable for each activity and each subject.
     
