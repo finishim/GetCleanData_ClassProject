@@ -91,7 +91,15 @@ run_analysis <- function() {
     names(finalData)<-gsub("\\(|\\)", "", names(finalData))
 	
 	
-    ## From the data set in step 4, create a second, independent tidy data set 
+    ## From the data set in step 4, create a second, independent tidy data set
     ## with the average of each variable for each activity and each subject.
+    
+    
+    # melt the data set and make it narrow
+    # therefore each row will be for a single measurement and ergo "tidy"
+    finalData.melted <- melt(finalData, id = c("SubjectId", "Activity"))
+    
+    # cast/summarize the data with the mean function
+    finalData.mean <- dcast(finalData.melted, SubjectId + Activity ~ variable, mean)
     
 }
