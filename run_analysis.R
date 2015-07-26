@@ -70,6 +70,10 @@ run_analysis <- function() {
     ## Use descriptive activity names to name the activities in the data set
     
     
+	# replace finalData table's activity id column with activity name
+    finalData[,2] <- activityLabels[finalData[,2], 2]
+	
+	
     ## Appropriately label the data set with descriptive variable names. 
     
     
