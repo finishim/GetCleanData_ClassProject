@@ -1,7 +1,9 @@
 run_analysis <- function() {
     
+	
     ## Start by downloading the dataset if not already downloaded
     
+	
     dataset_url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
     if(!file.exists("data")) {
         dir.create("data") # create data folder if it does not already exist
@@ -11,8 +13,10 @@ run_analysis <- function() {
         unzip(".\\data\\projectfiles.zip", exdir = ".\\data") # unzip the file
     }
     
+	
     ## Merge the training and the test sets to create one data set.
     
+	
 	# read general files
     features <- read.table(".\\data\\UCI HAR Dataset\\features.txt",header = FALSE)
     activityLabels <- read.table(".\\data\\UCI HAR Dataset\\activity_labels.txt",header = FALSE)
@@ -46,9 +50,23 @@ run_analysis <- function() {
     # merge all X tables together
     mergedxData <- rbind(xTest,xTrain)
     
+	
     ## Extracts only the measurements on the mean and standard deviation for each measurement. 
     
+	
+	# look for -mean() or -std()
+    selectMeasurements <- grep("-(mean|std)\\(\\)", features[, 2])
     
+    # grab the labels
+    selectLabels <- features[selectMeasurements,2]
+    
+    # subset the chosen measurements
+    selectedData <- mergedxData[,selectMeasurements]
+    
+    # add the y and subject data columns to the table
+    finalData <- cbind(mergedsubjectData, mergedyData, selectedData)
+    
+	
     ## Use descriptive activity names to name the activities in the data set
     
     
