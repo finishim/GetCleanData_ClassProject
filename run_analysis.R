@@ -104,8 +104,8 @@ run_analysis <- function() {
     ## cast/summarize the data with the mean function, wide and tidy
     finalData.mean <- dcast(finalData.melted, SubjectId + Activity ~ variable, mean)
     
-    ## write the wide tidy table to a  csv file
-    write.csv(finalData.mean, file = ".\\tidydata.csv", row.names = FALSE)
+    ## write the wide tidy table to a txt file
+    write.table(finalData.mean, file = ".\\tidydata.txt", row.names = FALSE)
 
     
 }
