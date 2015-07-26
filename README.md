@@ -8,7 +8,7 @@ The resulting tidy data is also loaded into the repository.
 run_analysis.R function is the main function that needs run for generating the result.
 
 ## Project Requirements
-You should create one R script called run_analysis.R that does the following. 
+You should create one R script called run_analysis.R that does the following.
 1. Merges the training and the test sets to create one data set.
 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
 3. Uses descriptive activity names to name the activities in the data set
