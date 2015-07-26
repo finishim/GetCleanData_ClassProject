@@ -37,14 +37,14 @@ run_analysis <- function() {
     colnames(xTrain) <- features[,2] 
     colnames(yTrain) <- "activityId"
 	
-	# Merge Test Data files into one table
-    testData <- cbind(yTest,subjectTest,xTest)
+    # merge all y tables together
+    mergedyData <- rbind(yTest,yTrain)
     
-    # Merge Train Data files into one table
-    trainData <- cbind(yTrain,subjectTrain,xTrain)
+    # merge all subject tables together
+    mergedsubjectData <- rbind(subjectTest,subjectTrain)
     
-    # Merge all tables together
-    mergedData <- rbind(trainData,testData)
+    # merge all X tables together
+    mergedxData <- rbind(xTest,xTrain)
     
     ## Extracts only the measurements on the mean and standard deviation for each measurement. 
     
