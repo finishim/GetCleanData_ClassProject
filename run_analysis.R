@@ -99,6 +99,7 @@ run_analysis <- function() {
     
     
     ## melt the data set and make it narrow and tidy
+	library(reshape2)
     finalData.melted <- melt(finalData, id = c("SubjectId", "Activity"))
     
     ## cast/summarize the data with the mean function, wide and tidy
