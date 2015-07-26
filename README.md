@@ -31,3 +31,10 @@ You should create one R script called run_analysis.R that does the following.
     + Melt the data set and make it a narrow tidy data set.
     + Apply the mean function to this melted data set. It makes it a wider tidy data set.
     + Write the resulting table into a .csv file.
+
+## Tidy Data Description
+Here are the assumptions for tidy data:
+*The tidy data has no duplicate columns. 
+*Each variable is in a single column. 
+*Each activity-subject pair has a different row. 
+*Column names are easy to read and descriptive.
